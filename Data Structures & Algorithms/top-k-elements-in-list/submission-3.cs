@@ -1,24 +1,22 @@
 public class Solution {
     public int[] TopKFrequent(int[] nums, int k) {
-       Dictionary<int,int> map=new();
+        
+        Dictionary<int,int> map=new();
+        int[] result=new int[k];
         for(int i=0;i<nums.Length;i++)
         {
             if(map.ContainsKey(nums[i]))
             {
-                map[nums[i]]++;
+                map[nums[i]]+=1;;
             }
             else{
-                map.Add(nums[i],1);
-                
+                map[nums[i]]=1;
             }
         }
-        int[] result=new int[k];
-
-        //top frequent 
         for(int i=0;i<k;i++)
         {
-            int maxFreq=-1;
             int maxNum=0;
+            int maxFreq=-1;
 
             foreach(var pair in map)
             {
@@ -27,12 +25,11 @@ public class Solution {
                     maxFreq=pair.Value;
                     maxNum=pair.Key;
                 }
-
             }
             result[i]=maxNum;
             map.Remove(maxNum);
         }
         return result;
-    
+
     }
 }
