@@ -1,24 +1,39 @@
 public class Solution {
     public List<List<string>> GroupAnagrams(string[] strs) {
         
-        Dictionary<string,List<String>> dict=new();
+        List<List<String>> result=new();
+        HashSet<int> seen=new();
 
         for(int i=0;i<strs.Length;i++)
         {
-            string st=strs[i];
-            char[] characters=st.ToCharArray();
-            Array.Sort(characters);
-            String str=new String(characters);
+            if(seen.Contains(i)) continue;
+
+            Char[] tar=strs[i].ToCharArray();
+            Array.Sort(tar);
+            string target=new string(tar);
+
+            List<string> res=new();
+            res.Add(strs[i]);
+
+            for(int j=i+1;j<strs.Length;j++)
+            {
+                Char[] t=strs[j].ToCharArray();
+                Array.Sort(t);
+                string tt=new string(t);
 
                 
+                if(target.Length!=tt.Length) continue;
 
-                if(!dict.ContainsKey(str))
-                    {
-                        dict[str]=new List<String>();
-                    }
-                    dict[str].Add(st);
-            
+               if(tt==target)
+               {
+                     res.Add(strs[j]);
+                    seen.Add(j);
+               }
+               
+            }
+            result.Add(res);
         }
-         return new List<List<string>>(dict.Values);
+        return result;
     }
+
 }
